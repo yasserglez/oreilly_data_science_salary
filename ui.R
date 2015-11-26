@@ -1,11 +1,14 @@
 library("shiny")
 
+source("helpers.R")
+
 about_you <- div(
   h3("About You"),
   numericInput("age", h4("Age"), 18, min = 1, max = 130),
-  selectInput("gender", h4("Gender"), c("Male", "Female")),
+  selectInput("gender", h4("Gender"),
+              c(GENDER_MALE, GENDER_FEMALE)),
   selectInput("education", h4("Education"),
-              c("PhD", "Master's but not PhD", "Other")),
+              c(EDUCATION_PHD, EDUCATION_MASTERS, EDUCATION_OTHER)),
   checkboxInput("computer_science", "Academic specialty in computer science"),
   selectInput("bargaining_skills", h4("Bargaining Skills"),
               c("1 (Poor)", "2", "3", "4", "5 (Excellent)"),
@@ -15,37 +18,43 @@ about_you <- div(
 about_company <- div(
   h3("About the Company"),
   selectInput("industry", h4("Industry"),
-              c("Software (incl. security, cloud services)",
-                "Retail / E-Commerce", "Education", "Other")),
+              c(INDUSTRY_SOFTWARE, INDUSTRY_ECOMMERCE,
+                INDUSTRY_EDUCATION, INDUSTRY_OTHER)),
   selectInput("location", h4("Location"),
-              c("California", "Northeast US", "Southern US", "Canada",
-                "Latin America", "Europe (except UK/Ireland)",
-                "UK/Ireland", "Asia", "Other")),
-  selectInput("company_size", h4("Size"), c("<500", "2,500+", "Other"))
+              c(LOCATION_CALIFORNIA, LOCATION_NORTHEAST_US,
+                LOCATION_SOUTHERN_US, LOCATION_CANADA,
+                LOCATION_LATIN_AMERICA, LOCATION_EUROPE,
+                LOCATION_UK_IRELAND, LOCATION_ASIA, LOCATION_OTHER)),
+  selectInput("company_size", h4("Size"),
+              c(COMPANY_SIZE_500, COMPANY_SIZE_2500, COMPANY_SIZE_OTHER))
 )
 
 about_position <- div(
   h3("About the Position"),
   selectInput("title", h4("Title"),
-              c("Architect", "Scientist", "Engineer",
-                "Developer", "Analyst", "Other")),
+              c(TITLE_ARCHITECT, TITLE_SCIENTIST, TITLE_ENGINEER,
+                TITLE_DEVELOPER, TITLE_ANALYST, TITLE_OTHER)),
   checkboxInput("principal_level", "‘Principal’ level position"),
   checkboxInput("upper_management", "Upper management (director, VP, CxO)"),
   numericInput("work_week", h4("Working Time (hours / week)"), 40,
                min = 1, max = 24 * 7),
   h4("Responsibilities"),
   selectInput("meetings", h5("Meetings"),
-              c("1–3 hours / day", "4+ hours / day", "Other")),
+              c(MEETINGS_1_TO_3, MEETINGS_4_PLUS, MEETINGS_OTHER)),
   selectInput("basic_eda", h5("Basic Exploratory Data Analysis"),
-              c("1–4 hours / week", "4+ hours / day", "Other")),
+              c(BASIC_EDA_1_TO_4, BASIC_EDA_4_PLUS, BASIC_EDA_OTHER)),
+  selectInput("visualizations", h5("Creating Visualizations"),
+              c(VISUALIZATIONS_1_TO_3, VISUALIZATIONS_4_PLUS, VISUALIZATIONS_OTHER)),
   selectInput("data_cleaning", h5("Data Cleaning"),
-              c("1–4 hours / week", "Other")),
+              c(DATA_CLEANING_1_TO_4, DATA_CLEANING_OTHER)),
+  selectInput("machine_learning", h5("Machine Learning, Statistics"),
+              c(MACHINE_LEARNING_1_TO_3, MACHINE_LEARNING_OTHER)),
   h4("Technologies"),
   fluidRow(
     column(3,
-       checkboxInput("spark", "Spark"),
-       checkboxInput("scala", "Scala"),
-       checkboxInput("hadoop", "Hadoop")
+      checkboxInput("spark", "Spark"),
+      checkboxInput("scala", "Scala"),
+      checkboxInput("hadoop", "Hadoop")
     ),
     column(3,
       checkboxInput("hive", "Hive"),
@@ -56,14 +65,14 @@ about_position <- div(
       checkboxInput("cpp", "C++"),
       checkboxInput("visual_basic", "Visual Basic"),
       checkboxInput("teradata", "Teradata")
-    )
+     )
   ),
   selectInput("cloud_computing", h5("Cloud Computing"),
-              c("Most or all cloud computing", "Not using cloud computing", "Other"))
+              c(CLOUD_COMPUTING_MOST, CLOUD_COMPUTING_NONE, CLOUD_COMPUTING_OTHER))
 )
 
 shinyUI(fluidPage(
-  titlePanel("O'Reilly ‘2015 Data Science Salary Survey’ Predictors"),
+  titlePanel("O'Reilly ‘2015 Data Science Salary Survey’"),
   fluidRow(
     column(3, about_you, about_company),
     column(3, about_position)
