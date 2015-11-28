@@ -55,7 +55,7 @@ CLOUD_COMPUTING_OTHER <- "Other"
 
 
 # A basic, parsimonious linear model (page 6)
-predict_salary_model1 <- function(x) {
+predict_salary_model1 <- function(x) {(
     70577 # intercept
   + 1467  * max(x$age - 18, 0)
   - 8026  * (x$gender == GENDER_FEMALE)
@@ -71,10 +71,10 @@ predict_salary_model1 <- function(x) {
   - 20989 * (x$location == LOCATION_LATIN_AMERICA)
   - 23292 * (x$location == LOCATION_EUROPE)
   - 25517 * (x$location == LOCATION_ASIA)
-}
+)}
 
 # A revised model, including tasks (page 16)
-predict_salary_model2 <- function(x) {
+predict_salary_model2 <- function(x) {(
     14595 # intercept
   + 1449  * max(x$age - 18, 0)
   + 7205  * x$bargaining_skills
@@ -102,10 +102,10 @@ predict_salary_model2 <- function(x) {
   - 2241  * (x$visualizations == VISUALIZATIONS_4_PLUS)
   + 130   * (x$data_cleaning == DATA_CLEANING_1_TO_4)
   + 1733  * (x$machine_learning == MACHINE_LEARNING_1_TO_3)
-}
+)}
 
 # Tools and salary: a more complete model (page 30)
-predict_salary_model3 <- function(x) {
+predict_salary_model3 <- function(x) {(
     26393 # intercept
   + 1505  * max(x$age - 18, 0)
   + 6106  * x$bargaining_skills
@@ -138,10 +138,10 @@ predict_salary_model3 <- function(x) {
   + 3213  * x$cpp
   + 1435  * x$hadoop
   - 3243  * x$visual_basic
-}
+)}
 
 # Final model (page 35)
-predict_salary_model4 <- function(x) {
+predict_salary_model4 <- function(x) {(
     30572 # intercept
   + 1395  * max(x$age - 18, 0)
   + 5911  * x$bargaining_skills
@@ -181,4 +181,4 @@ predict_salary_model4 <- function(x) {
   + 2819  * (x$title == TITLE_ENGINEER)
   - 3272  * (x$title == TITLE_DEVELOPER)
   - 4566  * (x$title == TITLE_ANALYST)
-}
+)}
