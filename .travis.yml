@@ -1,6 +1,6 @@
 language: r
 sudo: required
-r_packages:
+r_binary_packages:
  - shiny
  - testthat
 script:
