@@ -2,6 +2,7 @@ library("shiny")
 
 source("helpers.R")
 
+
 about_you <- div(
   h3("About You"),
   numericInput("age", h4("Age"), 18, min = 1, max = 130),
@@ -14,6 +15,7 @@ about_you <- div(
               c("1 (Poor)", "2", "3", "4", "5 (Excellent)"),
               selected = 3)
 )
+
 
 about_company <- div(
   h3("About the Company"),
@@ -29,52 +31,85 @@ about_company <- div(
               c(COMPANY_SIZE_500, COMPANY_SIZE_2500, COMPANY_SIZE_OTHER))
 )
 
+
 about_position <- div(
   h3("About the Position"),
-  selectInput("title", h4("Title"),
-              c(TITLE_ARCHITECT, TITLE_SCIENTIST, TITLE_ENGINEER,
-                TITLE_DEVELOPER, TITLE_ANALYST, TITLE_OTHER)),
-  checkboxInput("principal_level", "‘Principal’ level position"),
-  checkboxInput("upper_management", "Upper management (director, VP, CxO)"),
-  numericInput("work_week", h4("Working Time (hours / week)"), 40,
-               min = 1, max = 24 * 7),
-  h4("Responsibilities"),
-  selectInput("meetings", h5("Meetings"),
-              c(MEETINGS_1_TO_3, MEETINGS_4_PLUS, MEETINGS_OTHER)),
-  selectInput("basic_eda", h5("Basic Exploratory Data Analysis"),
-              c(BASIC_EDA_1_TO_4, BASIC_EDA_4_PLUS, BASIC_EDA_OTHER)),
-  selectInput("visualizations", h5("Creating Visualizations"),
-              c(VISUALIZATIONS_1_TO_3, VISUALIZATIONS_4_PLUS, VISUALIZATIONS_OTHER)),
-  selectInput("data_cleaning", h5("Data Cleaning"),
-              c(DATA_CLEANING_1_TO_4, DATA_CLEANING_OTHER)),
-  selectInput("machine_learning", h5("Machine Learning, Statistics"),
-              c(MACHINE_LEARNING_1_TO_3, MACHINE_LEARNING_OTHER)),
-  h4("Technologies"),
   fluidRow(
-    column(3,
-      checkboxInput("spark", "Spark"),
-      checkboxInput("scala", "Scala"),
-      checkboxInput("hadoop", "Hadoop")
+    column(6,
+      selectInput("title", h4("Title"),
+                  c(TITLE_ARCHITECT, TITLE_SCIENTIST, TITLE_ENGINEER,
+                    TITLE_DEVELOPER, TITLE_ANALYST, TITLE_OTHER)),
+      checkboxInput("principal_level", "‘Principal’ level position"),
+      checkboxInput("upper_management", "Upper management (director, VP, CxO)"),
+      numericInput("work_week", h4("Working Time (hours / week)"), 40,
+                   min = 1, max = 24 * 7),
+      h4("Technologies"),
+      fluidRow(
+        column(3,
+               checkboxInput("spark", "Spark"),
+               checkboxInput("scala", "Scala"),
+               checkboxInput("hadoop", "Hadoop")
+        ),
+        column(3,
+               checkboxInput("hive", "Hive"),
+               checkboxInput("emr", tags$abbr("EMR", title = "Amazon Elastic MapReduce")),
+               checkboxInput("d3", "D3")
+        ),
+        column(4,
+               checkboxInput("cpp", "C++"),
+               checkboxInput("visual_basic", "Visual Basic"),
+               checkboxInput("teradata", "Teradata")
+        )
+      ),
+      selectInput("cloud_computing", h5("Cloud Computing"),
+                  c(CLOUD_COMPUTING_MOST, CLOUD_COMPUTING_NONE, CLOUD_COMPUTING_OTHER))
     ),
-    column(3,
-      checkboxInput("hive", "Hive"),
-      checkboxInput("emr", tags$abbr("EMR", title = "Amazon Elastic MapReduce")),
-      checkboxInput("d3", "D3")
-    ),
-    column(4,
-      checkboxInput("cpp", "C++"),
-      checkboxInput("visual_basic", "Visual Basic"),
-      checkboxInput("teradata", "Teradata")
-     )
-  ),
-  selectInput("cloud_computing", h5("Cloud Computing"),
-              c(CLOUD_COMPUTING_MOST, CLOUD_COMPUTING_NONE, CLOUD_COMPUTING_OTHER))
+    column(6,
+       h4("Responsibilities"),
+       selectInput("meetings", h5("Meetings"),
+                   c(MEETINGS_1_TO_3, MEETINGS_4_PLUS, MEETINGS_OTHER)),
+       selectInput("basic_eda", h5("Basic Exploratory Data Analysis"),
+                   c(BASIC_EDA_1_TO_4, BASIC_EDA_4_PLUS, BASIC_EDA_OTHER)),
+       selectInput("visualizations", h5("Creating Visualizations"),
+                   c(VISUALIZATIONS_1_TO_3, VISUALIZATIONS_4_PLUS, VISUALIZATIONS_OTHER)),
+       selectInput("data_cleaning", h5("Data Cleaning"),
+                   c(DATA_CLEANING_1_TO_4, DATA_CLEANING_OTHER)),
+       selectInput("machine_learning", h5("Machine Learning, Statistics"),
+                   c(MACHINE_LEARNING_1_TO_3, MACHINE_LEARNING_OTHER))
+    )
+  )
 )
+
+
+report_link <- a(href = "http://www.oreilly.com/data/free/2015-data-science-salary-survey.csp", "the survey report")
+
+salary <- div(
+  h3("Salary"),
+  tabsetPanel(
+    tabPanel("Model #1", div(style = "padding: 1em;",
+      p("A basic, parsimonious linear model. For more information see page 6 of", report_link),
+      span("Predicted salary:", strong(textOutput("salary_model1", inline = TRUE)))
+    )),
+    tabPanel("Model #2", div(style = "padding: 1em;",
+       p("A revised model, including tasks. For more information see page 13 of", report_link),
+       span("Predicted salary:", strong(textOutput("salary_model2", inline = TRUE)))
+    )),
+    tabPanel("Model #3", div(style = "padding: 1em;",
+      p("A more complete model, including tools. For more information see page 30 of", report_link),
+      span("Predicted salary:", strong(textOutput("salary_model3", inline = TRUE)))
+    )),
+    tabPanel("Model #4", div(style = "padding: 1em;",
+      p("Final model. For more information see page 35 of", report_link),
+      span("Predicted salary:", strong(textOutput("salary_model4", inline = TRUE)))
+    ))
+  )
+)
+
 
 shinyUI(fluidPage(
   titlePanel("O'Reilly ‘2015 Data Science Salary Survey’"),
   fluidRow(
     column(3, about_you, about_company),
-    column(3, about_position)
+    column(6, about_position, salary)
   )
 ))

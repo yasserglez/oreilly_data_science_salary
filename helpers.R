@@ -73,7 +73,7 @@ predict_salary_model1 <- function(x) {(
   - 25517 * (x$location == LOCATION_ASIA)
 )}
 
-# A revised model, including tasks (page 16)
+# A revised model, including tasks (page 13)
 predict_salary_model2 <- function(x) {(
     14595 # intercept
   + 1449  * max(x$age - 18, 0)
@@ -104,7 +104,7 @@ predict_salary_model2 <- function(x) {(
   + 1733  * (x$machine_learning == MACHINE_LEARNING_1_TO_3)
 )}
 
-# Tools and salary: a more complete model (page 30)
+# A more complete model, including tools (page 30)
 predict_salary_model3 <- function(x) {(
     26393 # intercept
   + 1505  * max(x$age - 18, 0)
@@ -182,3 +182,8 @@ predict_salary_model4 <- function(x) {(
   - 3272  * (x$title == TITLE_DEVELOPER)
   - 4566  * (x$title == TITLE_ANALYST)
 )}
+
+
+format_salary <- function(salary) {
+  paste("$", format(salary, big.mark = ","), sep = "")
+}
