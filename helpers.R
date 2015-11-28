@@ -170,7 +170,7 @@ predict_salary_model4 <- function(x) {(
   + 9747  * x$spark
   + 6758  * x$d3
   + 4878  * x$emr
-  + 3371  * x$Scala
+  + 3371  * x$scala
   + 2309  * x$cpp
   + 1173  * x$teradata
   + 625   * x$hive
