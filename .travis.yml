@@ -1,0 +1,7 @@
+language: r
+sudo: required
+r_packages:
+ - shiny
+ - testthat
+script:
+  - Rscript -e "library('testthat'); test_file('tests.R')"
