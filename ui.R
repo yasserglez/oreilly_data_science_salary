@@ -116,11 +116,11 @@ salary <- div(
 
 
 shinyUI(fluidPage(
-  fluidRow(br(),
+  fluidRow(
     column(10, offset = 1, titlePanel("O'Reilly ‘2015 Data Science Salary Survey’ models")),
     column(3, offset = 1, about_you, about_company),
     column(7, about_position, salary),
-    column(10, offset = 1, hr(), HTML(
+    column(10, offset = 1, HTML(
       'Source code available at <a target="_blank" href="https://github.com/yasserglez/oreilly_data_science_salary">https://github.com/yasserglez/oreilly_data_science_salary</a>.')
     )
   )
