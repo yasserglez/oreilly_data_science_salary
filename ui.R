@@ -81,35 +81,47 @@ about_position <- div(
 )
 
 
-report_link <- a(href = "http://www.oreilly.com/data/free/2015-data-science-salary-survey.csp", "the survey report")
+report_ref <- function(page) {
+  HTML(sprintf("For more information see page %d of ", page),
+       '<a target="_blank" href="http://www.oreilly.com/data/free/2015-data-science-salary-survey.csp">the survey report</a>.')
+}
+
+report_link = ""
 
 salary <- div(
   h3("Salary"),
-  tabsetPanel(
-    tabPanel("Model #1", div(style = "padding: 1em;",
-      p("A basic, parsimonious linear model. For more information see page 6 of", report_link),
-      span("Predicted salary:", strong(textOutput("salary_model1", inline = TRUE)))
-    )),
-    tabPanel("Model #2", div(style = "padding: 1em;",
-       p("A revised model, including tasks. For more information see page 13 of", report_link),
-       span("Predicted salary:", strong(textOutput("salary_model2", inline = TRUE)))
-    )),
-    tabPanel("Model #3", div(style = "padding: 1em;",
-      p("A more complete model, including tools. For more information see page 30 of", report_link),
-      span("Predicted salary:", strong(textOutput("salary_model3", inline = TRUE)))
-    )),
-    tabPanel("Model #4", div(style = "padding: 1em;",
-      p("Final model. For more information see page 35 of", report_link),
-      span("Predicted salary:", strong(textOutput("salary_model4", inline = TRUE)))
-    ))
+  fluidRow(
+    column(11,
+      tabsetPanel(
+        tabPanel("Model #1", div(style = "padding: 1em;",
+          p("A basic, parsimonious linear model.", report_ref(6)),
+          span("Predicted salary:", strong(textOutput("salary_model1", inline = TRUE)))
+        )),
+        tabPanel("Model #2", div(style = "padding: 1em;",
+           p("A revised model, including tasks.", report_ref(13)),
+           span("Predicted salary:", strong(textOutput("salary_model2", inline = TRUE)))
+        )),
+        tabPanel("Model #3", div(style = "padding: 1em;",
+          p("A more complete model, including tools.", report_ref(30)),
+          span("Predicted salary:", strong(textOutput("salary_model3", inline = TRUE)))
+        )),
+        tabPanel("Model #4", div(style = "padding: 1em;",
+          p("Final model.", report_ref(35)),
+          span("Predicted salary:", strong(textOutput("salary_model4", inline = TRUE)))
+        ))
+      )
+    )
   )
 )
 
 
 shinyUI(fluidPage(
-  titlePanel("O'Reilly ‘2015 Data Science Salary Survey’"),
-  fluidRow(
-    column(3, about_you, about_company),
-    column(6, about_position, salary)
+  fluidRow(br(),
+    column(10, offset = 1, titlePanel("O'Reilly ‘2015 Data Science Salary Survey’ models")),
+    column(3, offset = 1, about_you, about_company),
+    column(7, about_position, salary),
+    column(10, offset = 1, hr(), HTML(
+      'Source code available at <a target="_blank" href="https://github.com/yasserglez/oreilly_data_science_salary">https://github.com/yasserglez/oreilly_data_science_salary</a>.')
+    )
   )
 ))
